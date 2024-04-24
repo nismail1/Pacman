@@ -1,0 +1,34 @@
+OVERALL:
+My game Pacman is made up of several classes where the main logic is defined in a class calles Pacman. This class
+sets up a board and it moves the Pacman along this board checking for whether it is encountering a wall and
+eating dots along the way and gaining points. In order to check for collision with multiple types of different
+objects, I created an interface called Smart Objects that all implement the method collision. It allows each
+square to have an array of SmartObjects so that whenever there is a collision, the method collision can be
+called on all SmartObjects in the array. There is also multiple ghost in a pen that
+are being released periodically and chasing the Pacman based on a Breadth First Algorithm implemented
+in the Ghosts class.
+
+Design Choices:
+
+Collide Method in Ghost-
+If there is collision, and it is wasn't frightened then Pacman loses a life and goes back to the starting position.
+If frightened, then set the x and y back to original position for the ghost and reset the boolean for the 
+ghost pen. Also, update the score.
+ 
+ GhostModes Method in Pacman-
+ This method takes in an instance of ghost. It checks what method it currently is in. If the mode is frightened,
+ then the ghosts need to move in a random direction whenever they encounter an intersection. I handled this
+ through checking the valid neighbors of the ghost and then adding any valid neighbors into an array. I then
+ used the random function in order to generate a random index of that array. Then, I move the ghost in that random
+ direction. If the mode was not frightened then I create a target based on the instance of the ghost and 
+ then I call BFS on that target and move the ghost in the returned direction.
+ 
+ GhostTimeHandler-
+ 
+ Usually TimeHandlers mostly call functions rather than have code just within the Timehandler. However, my GhostTimeHadnler
+ differs from this and is slightly more lengthy than normal. This is because I use several different counters to
+ know what mode that game is in and whether the game is still continuing. Based on these counters, certain actions
+ have to be performed. For example, if the game is over, then I have to make a label one more time and end the game.
+ Also, when the chase counter exceeds 80, the mode has to be switched to scatter and the ghostModes method has
+ to be called on all the instances of ghost.
+	 
